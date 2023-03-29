@@ -118,6 +118,23 @@ namespace baja_reciever
                 {
                     FuelLevel.Value = 0.0;
                 }
+
+                // Doing entire Suspension Travel display in one try-catch
+                try
+                {
+                    FLTravel.Text = (parseData(data, " SFL") + " \"");
+                    FRTravel.Text = (parseData(data, " SFR") + " \"");
+                    RLTravel.Text = (parseData(data, " SRL") + " \"");
+                    RRTravel.Text = (parseData(data, " SRR") + " \"");
+                }
+
+                catch (FormatException)
+                {
+                    FLTravel.Text = "0 \"";
+                    FRTravel.Text = "0 \"";
+                    RLTravel.Text = "0 \"";
+                    RRTravel.Text = "0 \"";
+                }
             });
         }
 
@@ -204,7 +221,9 @@ namespace baja_reciever
                 Start.Content = "Start";
                 started = false;
 
-                //port.Close();
+                // I thought this was erroring out, but it works now. WTF??
+                port.Close();
+                Status.Text = "Port Closed";
             }
 
         }
