@@ -214,28 +214,30 @@ namespace baja_reciever
 
             else if (started == true)
             {
-
+                // Remove event handlers
                 port.DataReceived -= port_DataReceived;
                 port.DataReceived -= GraphView.port_DataReceived;
 
+                // Update UI
                 Start.Content = "Start";
                 started = false;
 
-                // I thought this was erroring out, but it works now. WTF??
+                // 3/29/2023 I could have sworn this caused a crash, but it works now. WTF??
+                // Keep an eye on thread exit codes when debugging
                 port.Close();
                 Status.Text = "Port Closed";
             }
 
         }
 
-        //view the About Window
+        // View the About Window
         private void AboutWindow(object sender, RoutedEventArgs e)
         {
             AboutWindow about = new AboutWindow();
             about.Show();
         }
 
-        //view the Graph Window
+        // View the Graph Window
         private void viewGraph(object sender, RoutedEventArgs e)
         {
             GraphView graphWindow = new GraphView();
@@ -243,7 +245,7 @@ namespace baja_reciever
 
         }
 
-        //exit the application
+        // Exit the application
         private void Exit(object sender, RoutedEventArgs e)
         {
             Close();
