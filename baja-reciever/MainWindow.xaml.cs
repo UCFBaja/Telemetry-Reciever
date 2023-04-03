@@ -66,27 +66,11 @@ namespace baja_reciever
                 return;
             }
 
-            // NOT NEEDED: This is an inefficient way to do this, but may be required when using the ESP32
-            /*
-            if(recievedData != "\n")
+            // Update status
+            this.Dispatcher.Invoke(() =>
             {
-                this.Dispatcher.Invoke(() =>
-                {
-                    // Just need to display the total recieved data for now
-                    // Won't need this in the future
-                    Output.Text = Output.Text + recievedData;
-                });
-
-            }
-
-            else if(recievedData == "\n")
-            {
-                this.Dispatcher.Invoke(() =>
-                {
-                    Output.Text = "";
-                });
-            }
-            */
+                Status.Text = "Inactive - Port Open";
+            });
 
         }
 
@@ -94,6 +78,7 @@ namespace baja_reciever
         // TODO: Add other sensors
         public void updateDisplays(string[] data)
         {
+            double prevFuel = 0.0;
             // Doing this all in a single dispatcher for code cleanliness
             // (May not be the most runtime-efficient solution)
             this.Dispatcher.Invoke(() =>
@@ -111,12 +96,16 @@ namespace baja_reciever
                 //AFLDisplay.Text = parseData(data, "AFL");
                 try
                 {
+                    // Make sure the program keeps the previous value
+                    // This is so that it doesn't display 0.0 if connection is interrupted
+                    // This is hacky but who cares, it's my program
+                    prevFuel = FuelLevel.Value;
                     FuelLevel.Value = double.Parse(parseData(data, "FU"));
                 }
 
                 catch (FormatException)
                 {
-                    FuelLevel.Value = 0.0;
+                    FuelLevel.Value = prevFuel;
                 }
 
                 // Doing entire Suspension Travel display in one try-catch
