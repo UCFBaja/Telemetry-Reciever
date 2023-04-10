@@ -8,15 +8,15 @@
         Title="GraphView" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="400"/>
+            <RowDefinition Height="90*"/>
             <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="40*" />
         </Grid.ColumnDefinitions>
-        <WpfPlot Name="graph" Height="374" VerticalAlignment="Top"/>
-        <ComboBox x:Name="sensor" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="120" Grid.Row="1" Margin="5,0,0,5">
+        <WpfPlot Name="graph"/>
+        <ComboBox x:Name="sensor" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="120" Grid.Row="1" Margin="5,0,0,5" Height="18">
             <ComboBoxItem Content="PRPM"></ComboBoxItem>
             <ComboBoxItem Content="FU"></ComboBoxItem>
         </ComboBox>

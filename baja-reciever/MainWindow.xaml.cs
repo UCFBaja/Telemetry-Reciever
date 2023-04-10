@@ -179,7 +179,7 @@ namespace baja_reciever
                     port.DataReceived += new SerialDataReceivedEventHandler(port_DataReceived);
 
                     port.Open();
-                    Status.Text = "Port Open";
+                    Status.Text = "Inactive - Port Open";
 
                     Start.Content = "Stop";
                     started = true;
