@@ -16,7 +16,7 @@
             <ColumnDefinition Width="40*" />
         </Grid.ColumnDefinitions>
         <WpfPlot Name="graph"/>
-        <ComboBox x:Name="sensor" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="120" Grid.Row="1" Margin="5,0,0,5" Height="18">
+        <ComboBox x:Name="sensorSelectionBox" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="120" Grid.Row="1" Margin="5,0,0,5" Height="18" SelectionChanged="sensorSelectionChanged">
             <ComboBoxItem Content="PRPM"></ComboBoxItem>
             <ComboBoxItem Content="FU"></ComboBoxItem>
         </ComboBox>

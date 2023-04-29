@@ -11,19 +11,14 @@ namespace baja_reciever
     {
         readonly Stopwatch Stopwatch = Stopwatch.StartNew();
 
-        public GraphView()
+        public GraphView(SerialPort port)
         {
-            InitializeComponent();
-        }
-
-        public void serialSetup()
-        {
-            if (!(MainWindow.port.IsOpen))
+            if(!port.IsOpen)
             {
-                MainWindow.port.Open();
+                port.Open();    
             }
-
-            MainWindow.port.DataReceived += new SerialDataReceivedEventHandler(port_DataReceived);
+            port.DataReceived += new SerialDataReceivedEventHandler(port_DataReceived);
+            InitializeComponent();
         }
 
         public static void port_DataReceived(object sender, SerialDataReceivedEventArgs e)

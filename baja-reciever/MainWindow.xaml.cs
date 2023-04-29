@@ -229,7 +229,7 @@ namespace baja_reciever
         // View the Graph Window
         private void viewGraph(object sender, RoutedEventArgs e)
         {
-            GraphView graphWindow = new GraphView();
+            GraphView graphWindow = new GraphView(port);
             graphWindow.Show();
 
         }
