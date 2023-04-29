@@ -86,7 +86,7 @@ namespace baja_reciever
                 // Could try and move all of these into a single try-catch, but whatever
                 try
                 {
-                    priRPM.Text = (parseData(data, " PRPM") + " RPM");
+                    priRPM.Text = (App.parseData(data, " PRPM") + " RPM");
                 }
 
                 catch (FormatException)
@@ -100,7 +100,7 @@ namespace baja_reciever
                     // This is so that it doesn't display 0.0 if connection is interrupted
                     // This is hacky but who cares, it's my program
                     prevFuel = FuelLevel.Value;
-                    FuelLevel.Value = double.Parse(parseData(data, "FU"));
+                    FuelLevel.Value = double.Parse(App.parseData(data, "FU"));
                 }
 
                 catch (FormatException)
@@ -111,10 +111,10 @@ namespace baja_reciever
                 // Doing entire Suspension Travel display in one try-catch
                 try
                 {
-                    FLTravel.Text = (parseData(data, " SFL") + " \"");
-                    FRTravel.Text = (parseData(data, " SFR") + " \"");
-                    RLTravel.Text = (parseData(data, " SRL") + " \"");
-                    RRTravel.Text = (parseData(data, " SRR") + " \"");
+                    FLTravel.Text = (App.parseData(data, " SFL") + " \"");
+                    FRTravel.Text = (App.parseData(data, " SFR") + " \"");
+                    RLTravel.Text = (App.parseData(data, " SRL") + " \"");
+                    RRTravel.Text = (App.parseData(data, " SRR") + " \"");
                 }
 
                 catch (FormatException)
@@ -127,36 +127,6 @@ namespace baja_reciever
             });
         }
 
-
-        // Parse the data
-        // Searches array for the given sensor identification string
-        // Returns a string with the data from that sensor
-        public string parseData(string[] data, string sensor)
-        {
-            for (int i = 0; i < data.Length; i++)
-            {
-                // Make sure there is actually data in the element, and the data is longer than the sensor identifier
-                if (data[i].Length > 0 && data[i].Length > sensor.Length)
-                {
-                    // Looking for the first 3-4 characters
-                    string search = data[i].Substring(0, sensor.Length);
-
-                    if (search.Equals(sensor))
-                    {
-                        /*Console Debug Statements
-                        Console.WriteLine("\"" + data[i] + "\"");
-                        Console.WriteLine(data[i].Length);
-                        return data[i].Substring(3, data[i].Length-1);
-                        Console.WriteLine(data[i].Substring(sensor.Length + 1, data[i].Length - 3));
-                        */
-                        return data[i].Substring(sensor.Length + 1, data[i].Length - 3);
-                    }
-
-                }
-            }
-            return "";
-
-        }
 
         // When the user clicks the start button, we need to read each dropdown box
         // and set the serial settings accordingly

@@ -11,13 +11,23 @@ namespace baja_reciever
     {
         readonly Stopwatch Stopwatch = Stopwatch.StartNew();
 
+        public static string sensor = "";
+
         public GraphView(SerialPort port)
         {
-            if(!port.IsOpen)
-            {
-                port.Open();    
+            try
+            { 
+                if (!port.IsOpen)
+                {
+                    port.Open();
+                }
+                port.DataReceived += new SerialDataReceivedEventHandler(port_DataReceived);
             }
-            port.DataReceived += new SerialDataReceivedEventHandler(port_DataReceived);
+            // Make sure program doesn't crash if it can't open up the serial port
+            catch (System.IO.IOException)
+            {
+                MessageBox.Show("Serial Error: Please ensure your settings are correct");
+            }
             InitializeComponent();
         }
 
@@ -30,11 +40,20 @@ namespace baja_reciever
             // (each element will have a single sensor's output)
             string[] data = recievedData.Split('|');
 
+            updateGraph(data, GraphView.sensor);
+
         }
 
-        public void updateGraph(string data)
+        public static void updateGraph(string[] data, string sensor)
         {
+            double value = double.Parse(App.parseData(data, sensor));
 
+
+        }
+
+        public void sensorSelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            GraphView.sensor = sensorSelectionBox.SelectionBoxItem.ToString();
         }
     }
 
